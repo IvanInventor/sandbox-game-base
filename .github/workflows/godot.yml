@@ -1,0 +1,44 @@
+name: Godot Export
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  export:
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install wget zip unzip
+
+      - name: Download Godot 4.3
+        run: |
+          wget -q https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_linux.x86_64.zip
+          unzip Godot_v4.3-stable_linux.x86_64.zip
+          mv Godot_v4.3-stable_linux.x86_64 godot
+          chmod +x godot
+
+      - name: Download Godot 4.3 Export Templates
+        run: |
+          wget -q https://downloads.tuxfamily.org/godotengine/4.3/Godot_v4.3-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates
+          unzip Godot_v4.3-stable_export_templates.tpz -d ~/.local/share/godot/export_templates
+          mv ~/.local/share/godot/export_templates/templates ~/.local/share/godot/export_templates/4.3.stable
+
+      - name: Export Linux build
+        run: |
+          mkdir -p build/linux
+          ./godot --headless --verbose --export-debug "Linux/X11" project.godot "build/linux/sandbox-game.x86_64"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: builds
+          path: |
+            build/linux

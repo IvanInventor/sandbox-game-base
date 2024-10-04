@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://c251lsq7rnmfi"]
+
+[ext_resource type="Script" path="res://scripts/ui/menus/components/credits_builder.gd" id="1_28yuf"]
+[ext_resource type="Texture2D" uid="uid://cqbl7se65ni6d" path="res://assets/textures/basic/prototype.png" id="2_ju2w4"]
+
+[sub_resource type="GDScript" id="GDScript_eej02"]
+script/source = "extends Button
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func _on_pressed() -> void:
+	get_tree().change_scene_to_file(\"res://scenes/menus/general/main_menu.tscn\")
+"
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ju2w4")
+expand_mode = 1
+stretch_mode = 1
+
+[node name="CreditsBuilder" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_28yuf")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+script = SubResource("GDScript_eej02")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

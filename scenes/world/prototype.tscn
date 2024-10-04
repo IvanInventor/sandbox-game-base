@@ -1,0 +1,138 @@
+[gd_scene load_steps=17 format=3 uid="uid://ovheu72pq5c5"]
+
+[ext_resource type="Texture2D" uid="uid://cbsvootfr8wr6" path="res://icon.svg" id="1_n1qk5"]
+[ext_resource type="Script" path="res://scripts/entities/player.gd" id="2_j7mcy"]
+[ext_resource type="Texture2D" uid="uid://cyy72ie2uxct4" path="res://assets/world/kloofendal_48d_partly_cloudy_puresky_4k.exr" id="3_uenp2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y6yqe"]
+albedo_texture = ExtResource("1_n1qk5")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ciut0"]
+lightmap_size_hint = Vector2i(52, 52)
+size = Vector2(10, 10)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fvoxa"]
+points = PackedVector3Array(-5, 0, -5, -5, 0, 5, 5, 0, -5, 5, 0, 5)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_syrmq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ckfcy"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_131e2"]
+panorama = ExtResource("3_uenp2")
+
+[sub_resource type="Sky" id="Sky_co1sq"]
+sky_material = SubResource("PanoramaSkyMaterial_131e2")
+radiance_size = 2
+
+[sub_resource type="Environment" id="Environment_xmonp"]
+background_mode = 2
+background_intensity = 100000.0
+sky = SubResource("Sky_co1sq")
+tonemap_mode = 3
+tonemap_white = 8.0
+ssao_enabled = true
+ssao_detail = 2.0
+sdfgi_enabled = true
+sdfgi_bounce_feedback = 0.9
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.2
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+volumetric_fog_gi_inject = 1.14
+volumetric_fog_anisotropy = 0.7
+volumetric_fog_sky_affect = 0.295
+adjustment_saturation = 1.17
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_qo5hu"]
+exposure_multiplier = 3.069
+auto_exposure_scale = 0.22
+auto_exposure_speed = 0.8
+dof_blur_far_distance = 1.44
+dof_blur_near_distance = 0.01
+auto_exposure_min_sensitivity = 8.01
+
+[sub_resource type="PrismMesh" id="PrismMesh_v3nmx"]
+left_to_right = 2.0
+size = Vector3(1, 4.975, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_awxdk"]
+points = PackedVector3Array(1.35552, 2.36868, 0.565963, -0.539484, -2.52698, -0.539376, -0.539484, -2.52698, 0.565963, 0.565685, -2.52698, -0.539376, 1.51369, 2.52698, -0.539376, 0.565685, -2.52698, 0.565963, 1.51369, 2.13171, 0.565963, -0.4605, -2.13171, -0.539376, 1.35552, 2.36868, -0.539376, 1.51369, 2.13171, -0.539376, -0.4605, -2.13171, 0.565963, 0.644669, -2.21086, -0.539376, 0.960804, 1.4213, -0.539376, 0.644669, -2.21086, 0.565963, 1.51369, 2.52698, 0.565963, 0.960804, 1.4213, 0.565963, 1.43451, 2.52698, -0.539376, -0.539484, -2.36868, -0.539376, 1.43451, 2.52698, 0.565963, -0.539484, -2.36868, 0.565963, 0.644669, 0.631746, 0.565963, 0.644669, 0.631746, -0.539376)
+
+[sub_resource type="PrismMesh" id="PrismMesh_4s4jp"]
+left_to_right = 2.0
+size = Vector3(5, 3, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_mt6td"]
+points = PackedVector3Array(-2.57738, -1.57905, -0.579365, 7.57738, 1.59493, 0.531746, 7.57738, 1.59493, -0.579365, 2.64173, -1.41496, 0.474302, -2.26023, -1.26153, 0.531746, 2.6355, -1.35234, -0.5, 7.26023, 1.11864, -0.579365, -1.30778, -0.94401, -0.579365, 6.62593, 1.43617, 0.531746, 7.26023, 1.11864, 0.531746, -2.28724, -1.48837, 0.5, 6.62593, 1.43617, -0.579365, -1.30778, -0.94401, 0.531746, -2.57738, -1.42029, -0.579365, -2.57738, -1.42029, 0.531746, 7.26023, 1.59493, 0.531746, 7.57738, 1.43617, -0.579365, 3.18003, -1.08018, -0.5, -2.26023, -1.26153, -0.579365, 7.26023, 1.59493, -0.579365, 3.45145, 0.483909, -0.579365)
+
+[node name="Prototype" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+material_override = SubResource("StandardMaterial3D_y6yqe")
+mesh = SubResource("PlaneMesh_ciut0")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_fvoxa")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2094, 0)
+script = ExtResource("2_j7mcy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_syrmq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_ckfcy")
+
+[node name="Camera" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.536284, 0)
+current = true
+
+[node name="ThirdPersonCameraSpring" type="SpringArm3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.653, 0)
+spring_length = 2.0
+
+[node name="Camera3D" type="Camera3D" parent="Player/ThirdPersonCameraSpring"]
+transform = Transform3D(1, 0, 0, 0, 0.917692, 0.397292, 0, -0.397292, 0.917692, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xmonp")
+camera_attributes = SubResource("CameraAttributesPractical_qo5hu")
+
+[node name="Sun3" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.605197, 0.796076, 0, -0.796076, 0.605197, -4.86868, 8.33126, 2.18251)
+shadow_enabled = true
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 49.8991, 25.834, -30.0061)
+size = Vector3(10000, 10000, 1000)
+
+[node name="Stuff" type="Node3D" parent="."]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Stuff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.53884, 0.475673, 0.00146008)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stuff/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.351111, 1.88708, 0)
+mesh = SubResource("PrismMesh_v3nmx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stuff/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.351111, 1.88708, 0)
+shape = SubResource("ConvexPolygonShape3D_awxdk")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Stuff"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.53884, 0.475673, -3.93749)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stuff/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.351111, 0.94008, 0)
+mesh = SubResource("PrismMesh_4s4jp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stuff/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.351111, 0.94008, 0)
+shape = SubResource("ConvexPolygonShape3D_mt6td")
