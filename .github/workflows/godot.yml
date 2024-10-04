@@ -34,6 +34,8 @@ jobs:
       - name: Export Linux build
         run: |
           mkdir -p build/linux
+          # Export once before exporting, failing is ok
+          timeout 60 ./godot --headless --import --path . >/dev/null 2>&1 || true
           ./godot --headless --verbose --export-debug "Linux/X11" project.godot "build/linux/sandbox-game.x86_64"
 
       - name: Upload artifacts
